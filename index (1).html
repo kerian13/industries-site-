@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ferrand Précision – Usinage CNC et mécanique de précision en Essonne</title>
+<meta name="description" content="Sous-traitant d’usinage CNC de précision en Essonne pour l’aéronautique, le médical, l’automobile et l’énergie. Tolérances jusqu’à ±0,005 mm.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&family=Chakra+Petch:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== Base ===== */
+:root{--bg:#07090C;--s1:#0E1217;--s2:#151B22;--ln:#1E2A33;--tx:#E9EEF2;--mu:#8A99A6;--ac:#FFD400;--cy:#E9EEF2;--h:'Chakra Petch',system-ui,sans-serif;--m:'IBM Plex Mono',ui-monospace,monospace;--b:'Barlow',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg) linear-gradient(#ffffff09 1px,transparent 1px) 0 0/40px 40px fixed;color:var(--tx);font:400 1rem/1.65 var(--b);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-gradient(90deg,#ffffff09 1px,transparent 1px) 0 0/40px 40px}
+h1,h2,h3{font-family:var(--h);letter-spacing:-.02em;line-height:1.05}
+h1,h2{text-transform:uppercase;font-weight:700}
+h3{font-weight:500;font-size:1.15rem;line-height:1.25}
+p{max-width:64ch}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+.w{max-width:1160px;margin:auto;padding:0 24px}
+section{padding:110px 0}
+.sh{margin-bottom:48px}.sh h2{font-size:clamp(2rem,5vw,3.6rem);max-width:16ch}.sh p{color:var(--mu);margin-top:14px}
+.dim{height:9px;margin-top:22px;border:solid var(--ln);border-width:0 1px;position:relative}.dim::before{content:'';position:absolute;left:0;right:0;top:4px;height:1px;background:var(--ln)}
+.sub{margin:72px 0 24px;font-size:1.5rem}
+.steel{background:repeating-linear-gradient(90deg,#ffffff05 0 1px,transparent 1px 3px),linear-gradient(180deg,#1b2027,#12161B)}
+.btn{display:inline-block;background:var(--ac);color:#0B0D10;font:700 .95rem var(--h);padding:13px 22px;text-decoration:none;border:0;cursor:pointer;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);transition:filter .2s}
+.btn:hover{filter:brightness(1.12)}.btn.gh{background:none;color:var(--tx);box-shadow:inset 0 0 0 1px var(--ln)}
+.btn.gh{clip-path:none;border:1px solid var(--ln)}.btn.gh:hover{border-color:var(--tx)}
+/* ===== Chrome ===== */
+#prog{position:fixed;top:0;left:0;right:0;height:3px;background:var(--ac);transform:scaleX(0);transform-origin:left;z-index:60}
+
+
+#hd{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:#0B0D10b8;border-bottom:1px solid var(--ln)}
+.hb{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.05rem var(--h)}
+#nv{display:flex;align-items:center;gap:26px}
+#nv a:not(.btn){color:var(--mu);text-decoration:none;font:500 .9rem var(--h);position:relative;padding:6px 0}
+#nv a:not(.btn):hover,#nv a[aria-current]{color:var(--tx)}
+#nv a[aria-current]::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ac)}
+#nv .btn{padding:9px 16px;font-size:.85rem}
+#bg{display:none;background:none;border:0;padding:8px;cursor:pointer}
+#bg i{display:block;width:24px;height:2px;background:var(--tx);margin:6px 0;transition:transform .3s}
+#bg[aria-expanded=true] i:first-child{transform:translateY(4px) rotate(45deg)}#bg[aria-expanded=true] i:last-child{transform:translateY(-4px) rotate(-45deg)}
+/* ===== Hero ===== */
+.hero{min-height:100vh;padding:110px 0 0;display:flex;flex-direction:column;justify-content:center}
+.hg{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(2.4rem,6.2vw,5.2rem)}
+.hero p.sb{color:var(--mu);margin:24px 0 32px;font-size:1.1rem}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.hv svg{width:100%;height:auto;display:block}
+.spin{transform-box:fill-box;transform-origin:center;animation:sp 70s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.draw,.dw{stroke-dasharray:1;stroke-dashoffset:1}
+.draw{animation:dr 1.8s .5s ease forwards}.ok:not([hidden]) .dw{animation:dr 1s ease forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.ct{width:100%;border-collapse:collapse;font:.75rem var(--m);margin-top:10px}.ct th,.ct td{border:1px solid var(--ln);padding:6px 10px;text-align:left}.ct th{color:var(--mu);font-weight:400}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ln);margin-top:56px}
+.stats div{padding:22px 20px 22px 0}.stats div+div{padding-left:20px;border-left:1px solid var(--ln)}
+.stats b{font:500 clamp(1.8rem,4vw,2.8rem) var(--m);display:block;line-height:1.1}.stats span{color:var(--mu);font-size:.9rem}
+.mq{border-block:1px solid var(--ln);overflow:hidden;white-space:nowrap;padding:16px 0;margin-top:0}
+.mq>div{display:inline-block;animation:mq 40s linear infinite}
+.mq b{font:700 1.5rem var(--h);text-transform:uppercase;color:var(--mu);margin-left:56px}.mq b::after{content:'';display:inline-block;width:8px;height:8px;background:var(--ac);margin-left:56px}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* ===== Layout / cards ===== */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.story p+p{margin-top:16px}
+.vl{display:grid;gap:0}.vl div{border-top:1px solid var(--ln);padding:18px 0}.vl h3{margin-bottom:6px}.vl p{color:var(--mu);font-size:.95rem}
+.tl,.pr{display:grid;grid-template-columns:repeat(5,1fr);list-style:none;padding:0;gap:20px}
+.tl li{border-top:1px solid var(--ln);padding-top:20px;position:relative;color:var(--mu);font-size:.92rem}.tl li::before{content:'';position:absolute;top:-4px;left:0;width:7px;height:7px;background:var(--ac)}
+.tl b{display:block;font:500 1.4rem var(--m);color:var(--tx);margin-bottom:6px}
+.card{display:block;background:repeating-linear-gradient(90deg,#ffffff05 0 1px,transparent 1px 3px),linear-gradient(180deg,#1b2027,#12161B);border:1px solid var(--ln);padding:24px;position:relative;transition:border-color .3s,box-shadow .3s,transform .2s;will-change:transform}
+.card::after{content:'';position:absolute;left:-1px;right:-1px;top:-1px;height:2px;background:var(--ac);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.card:hover{border-color:#3a4452;box-shadow:0 18px 40px #0009}.card:hover::after{transform:scaleX(1)}
+.card p{color:var(--mu);font-size:.95rem;margin-top:8px}
+button.card{font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%}
+.ic{width:34px;height:34px;fill:none;stroke:var(--tx);stroke-width:1.5;margin-bottom:16px}
+.sp{list-style:none;padding:14px 0 0;margin-top:16px;border-top:1px dashed var(--ln);font:.8rem/1.9 var(--m);color:var(--mu)}
+.mf{margin-top:12px}.mf div{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--ln);padding:8px 0;font:.78rem var(--m)}.mf dt{color:var(--mu)}
+.bd{display:flex;gap:16px;flex-wrap:wrap}.bd div{display:flex;gap:12px;align-items:center;border:1px solid var(--ln);padding:12px 18px}.bd b{font:500 1rem var(--m)}.bd span{display:block;color:var(--mu);font-size:.8rem}
+.pl{display:flex;flex-wrap:wrap;gap:10px}.pl span{border:1px solid var(--ln);padding:8px 16px;font:.85rem var(--m);color:var(--mu)}
+.pr{counter-reset:s;position:relative}
+.pr::before,.pr::after{content:'';position:absolute;top:13px;left:0;right:0;height:2px;background:var(--ln)}
+.pr::after{background:var(--ac);transform:scaleX(0);transform-origin:left;transition:transform 1.8s ease .3s}.pr.in::after{transform:scaleX(1)}
+.pr li{position:relative;padding-top:44px;counter-increment:s;color:var(--mu);font-size:.9rem}
+.pr li::before{content:counter(s);position:absolute;top:0;left:0;width:28px;height:28px;background:var(--bg);border:1px solid var(--ln);display:grid;place-items:center;font:.8rem var(--m);color:var(--tx);z-index:1}
+.pr b{display:block;color:var(--tx);font:500 1.05rem var(--h);margin-bottom:4px}
+.fl{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.fl button{background:none;border:1px solid var(--ln);color:var(--mu);font:500 .85rem var(--h);padding:8px 16px;cursor:pointer;transition:all .2s}
+.fl button:hover{color:var(--tx)}.fl button[aria-pressed=true]{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.pv{height:120px;display:grid;place-items:center;margin:-24px -24px 20px;border-bottom:1px solid var(--ln);background:#0B0D1099}.pv svg{height:96px;fill:none;stroke:var(--mu);stroke-width:1.5}
+.mt{font:.78rem var(--m);color:var(--mu);margin-bottom:6px}
+.pj.show{animation:up .45s backwards}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.js .rv:not(.in)>*{opacity:0}.rv.in>*{animation:up .7s backwards;animation-delay:calc(var(--i,0)*80ms)}
+blockquote{border-left:2px solid var(--ac);padding-left:20px;color:var(--tx)}blockquote cite{display:block;margin-top:12px;font:.8rem var(--m);color:var(--mu);font-style:normal}
+dialog{background:var(--s1);color:var(--tx);border:1px solid var(--ln);max-width:620px;width:92%;padding:32px;margin:auto}
+dialog::backdrop{background:#000b;backdrop-filter:blur(4px)}
+dialog h3{font-size:1.5rem;margin-bottom:18px}dialog dt{font:.78rem var(--m);color:var(--mu);margin-top:16px}dialog dd{margin:4px 0 0}
+dialog .x{float:right;background:none;border:1px solid var(--ln);color:var(--tx);width:36px;height:36px;cursor:pointer;font-size:1.1rem}
+/* ===== Contact / forms ===== */
+address{font-style:normal;display:grid;gap:14px;margin-bottom:28px}address b{font:.78rem var(--m);color:var(--mu);font-weight:400;display:block}
+.map{width:100%;height:auto;border:1px solid var(--ln);display:block}
+form{display:grid;gap:16px}
+label{display:block;font:500 .85rem var(--h);color:var(--mu)}
+input,select,textarea{display:block;width:100%;margin-top:6px;background:var(--s2);border:1px solid var(--ln);color:var(--tx);padding:12px;font:1rem var(--b);border-radius:0}
+input:focus,select:focus,textarea:focus{border-color:var(--ac);outline:0}
+input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{border-color:#ff8a65}
+.er{display:block;min-height:1.2em;margin-top:4px;color:#ff8a65;font:.8rem var(--b)}
+.ck{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start;color:var(--tx);font-weight:400}.ck input{width:auto;margin:5px 0 0}
+fieldset{border:0;padding:0;display:grid;gap:14px}
+.qw{max-width:760px;background:var(--s1);border:1px solid var(--ln);padding:32px}
+.qb{height:3px;background:var(--ln);margin-bottom:16px}.qb i{display:block;height:100%;background:var(--ac);transform:scaleX(.33);transform-origin:left;transition:transform .5s}
+.sl{display:flex;justify-content:space-between;list-style:none;padding:0;margin-bottom:28px;font:.8rem var(--m);color:var(--mu)}.sl .on{color:var(--tx)}.sl .dn{color:var(--ac)}
+.dz{border:1px dashed #4a5666;padding:36px 20px;text-align:center;cursor:pointer;color:var(--mu);transition:all .2s}.dz.ov,.dz:hover{border-color:var(--ac);color:var(--tx)}.dz input{display:none}
+#fls{list-style:none;padding:0;font:.8rem var(--m)}#fls .bad{color:#ff8a65}
+.nb{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
+.ok{text-align:center;padding:24px 0;display:grid;justify-items:center;gap:12px}
+footer{border-top:1px solid var(--ln);padding:40px 0;color:var(--mu);font-size:.85rem}.fb{display:grid;gap:18px}.fb nav{display:flex;gap:20px;flex-wrap:wrap}.fb nav a{text-decoration:none}.fb nav a:hover{color:var(--tx)}
+/* ===== Responsive / accessibilité ===== */
+@media(max-width:900px){
+section{padding:80px 0}
+#bg{display:block}#nv{display:none;position:fixed;top:64px;left:0;right:0;flex-direction:column;align-items:flex-start;background:#0B0D10f5;padding:24px;border-bottom:1px solid var(--ln)}#nv.open{display:flex}
+.hg,.two{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.stats div:nth-child(3){padding-left:0;border-left:0}
+.tl,.pr{grid-template-columns:1fr}.pr::before,.pr::after{display:none}.hv{max-width:420px}}
+@media(max-width:620px){.g3{grid-template-columns:1fr}.qw{padding:20px}.sl{font-size:.7rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.draw,.dw{stroke-dashoffset:0}.pr::after{transform:none}.js .rv:not(.in)>*{opacity:1}}
+
+/* ===== DA 2 : industriel high-tech (cyan = données, jaune sécurité = action) ===== */
+body{background:var(--bg)}
+body::before{background:radial-gradient(#ffffff18 1px,transparent 1.5px) 0 0/28px 28px}
+h1,h2{letter-spacing:-.01em}
+.hz{height:12px;background:repeating-linear-gradient(-45deg,var(--ac) 0 12px,var(--bg) 12px 24px) 0 0/34px 12px}
+@keyframes hz{to{background-position:34px 0}}
+.sh::before{content:'';display:block;width:72px;height:10px;margin-bottom:22px;background:repeating-linear-gradient(-45deg,var(--ac) 0 6px,var(--bg) 6px 12px) 0 0/17px 10px}
+@keyframes hz2{to{background-position:17px 0}}
+.dim{border-color:#2A3540}.dim::before{background:#2A3540}
+#prog{background:var(--ac)}
+
+#hd{border-bottom-color:#1E2A33}
+.btn{position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,#fff8 50%,transparent 70%);transform:translateX(-100%);transition:transform .6s}.btn:hover::after{transform:translateX(100%)}
+.card{background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),#ffffff12,transparent 65%),linear-gradient(160deg,#10161c,#0a0d11);overflow:hidden}
+.card::before{content:'';position:absolute;inset:7px;pointer-events:none;opacity:0;transition:opacity .3s;--c:linear-gradient(var(--cy),var(--cy));background:var(--c) 0 0/10px 1px,var(--c) 0 0/1px 10px,var(--c) 100% 0/10px 1px,var(--c) 100% 0/1px 10px,var(--c) 0 100%/10px 1px,var(--c) 0 100%/1px 10px,var(--c) 100% 100%/10px 1px,var(--c) 100% 100%/1px 10px;background-repeat:no-repeat}
+.card:hover::before{opacity:1}.card:hover{border-color:#4a5560;box-shadow:0 0 0 1px #ffffff14,0 20px 50px #000a}
+.ic{stroke:var(--cy)}.sp{color:#7f94a3}
+.rv.in>*{animation:wipe .8s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*90ms)}
+@keyframes wipe{from{opacity:0;clip-path:inset(0 100% 0 0);transform:translateX(-24px)}}
+/* Hero plein écran : vidéo, canvas, HUD */
+.hero{position:relative;overflow:hidden;min-height:100vh;padding:0;display:flex;flex-direction:column;justify-content:flex-end}
+.hvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s}.hvid.on{opacity:.55}
+#cv{position:absolute;inset:0;width:100%;height:100%;transform:translateY(calc(var(--sy,0)*.2px))}
+.vig{position:absolute;inset:0;background:linear-gradient(90deg,#07090C 6%,#07090Cb0 45%,transparent 85%),linear-gradient(0deg,#07090C,transparent 40%)}
+.scan{position:absolute;inset:0;overflow:hidden;background:repeating-linear-gradient(0deg,#ffffff07 0 1px,transparent 1px 3px)}
+.scan::after{content:'';position:absolute;left:0;right:0;top:0;height:140px;background:linear-gradient(transparent,#ffffff0a,transparent);animation:sw 6s linear infinite}
+@keyframes sw{from{transform:translateY(-140px)}to{transform:translateY(100vh)}}
+.hud{position:absolute;inset:88px 20px 20px;pointer-events:none;z-index:1;--c:linear-gradient(var(--cy),var(--cy));background:var(--c) 0 0/22px 2px,var(--c) 0 0/2px 22px,var(--c) 100% 0/22px 2px,var(--c) 100% 0/2px 22px,var(--c) 0 100%/22px 2px,var(--c) 0 100%/2px 22px,var(--c) 100% 100%/22px 2px,var(--c) 100% 100%/2px 22px;background-repeat:no-repeat}
+.ro{position:absolute;top:14px;right:18px;font:.75rem/1.7 var(--m);color:var(--cy);text-align:right;white-space:pre}
+.hc,.hs{position:relative;z-index:2;width:100%}
+.hc{padding-top:150px}
+.hero h1{font-size:clamp(2.6rem,7.2vw,6.2rem);max-width:13ch}
+.hero p.sb{max-width:52ch;color:#a9b6c1}
+.stats{background:#07090Cb3;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top-color:#1E2A33;margin-top:44px}
+.stats b{color:var(--cy)}
+.mq{position:relative;z-index:2;border-color:#1E2A33;background:#07090Ce6}.mq b{color:#4d6270}
+@media(max-width:900px){.vig{background:linear-gradient(0deg,#07090C,#07090Cd0)}.hud{inset:80px 10px 10px}.ro{display:none}}
+
+.hud{opacity:.4}.ro{color:var(--mu)}
+
+.stats b{font-size:clamp(2.4rem,5.5vw,4rem)}.stats b span{font-size:inherit;color:inherit}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<header id="hd"><div class="w hb">
+  <a class="logo" href="#accueil" aria-label="Ferrand Précision, accueil">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M0 0h26l8 8v26H0z" fill="#FFD400"/><text x="17" y="23" text-anchor="middle" font-family="Chakra Petch,sans-serif" font-weight="700" font-size="14" fill="#0B0D10">FP</text></svg>
+    <span>Ferrand Précision</span></a>
+  <button id="bg" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nv"><i></i><i></i></button>
+  <nav id="nv" aria-label="Navigation principale">
+    <a href="#accueil">Accueil</a><a href="#entreprise">Entreprise</a><a href="#prestations">Prestations</a><a href="#realisations">Réalisations</a><a href="#contact">Contact</a>
+    <a class="btn" href="#devis">Demander un devis</a>
+  </nav>
+</div></header>
+
+<main>
+<!-- ===== ACCUEIL ===== -->
+<section id="accueil" class="hero">
+  <!-- Vidéo de fond : déposez votre fichier dans assets/hero.mp4. Sans fichier, l’animation canvas ci-dessous s’affiche seule. -->
+  <video id="hv" class="hvid" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="assets/hero.mp4" type="video/mp4"></video>
+  <canvas id="cv" aria-hidden="true"></canvas>
+  <div class="vig"></div><div class="scan"></div>
+  <div class="hud" aria-hidden="true"><div class="ro" id="ro"></div></div>
+  <div class="w hc">
+    <h1 id="h1">Des pièces au micron. Une exigence sans compromis.</h1>
+    <p class="sb">Usinage CNC et mécanique de précision en Essonne : fraisage 5 axes, tournage, rectification et contrôle 3D pour l’aéronautique, le médical, l’automobile et l’énergie.</p>
+    <div class="cta"><a class="btn" href="#devis">Demander un devis</a><a class="btn gh" href="#realisations">Voir nos réalisations</a></div>
+  </div>
+  <div class="w hs"><div class="stats" id="st">
+    <div><b><span data-n="25">0</span> ans</b><span>d’expérience</span></div>
+    <div><b><span data-n="40">0</span></b><span>salariés</span></div>
+    <div><b><span data-n="18">0</span></b><span>machines CNC</span></div>
+    <div><b><span data-n="98">0</span> %</b><span>de livraisons à l’heure</span></div>
+  </div></div>
+  <div class="mq" id="mq" aria-hidden="true"></div>
+</section>
+<div class="hz" aria-hidden="true"></div>
+
+<!-- ===== ENTREPRISE ===== -->
+<section id="entreprise"><div class="w">
+  <div class="sh rv"><h2>Vingt-cinq ans à tenir le micron</h2><div class="dim"></div></div>
+  <div class="two rv">
+    <div class="story">
+      <p>Ferrand Précision naît en 1999 dans un atelier de quatre personnes en Essonne, avec une conviction : une pièce juste vaut mieux qu’une pièce rapide.</p>
+      <p>Aujourd’hui, 40 salariés pilotent 18 machines CNC et une salle de métrologie 3D. Nous usinons des pièces à l’unité comme des séries de plusieurs milliers.</p>
+      <p>Nos clients sont motoristes, fabricants de dispositifs médicaux, équipementiers automobiles et énergéticiens. Tous attendent la même chose : des pièces conformes, des délais tenus et un dossier qualité complet.</p>
+    </div>
+    <div class="vl" id="val"></div>
+  </div>
+  <h3 class="sub">Notre histoire</h3><ol class="tl rv" id="tl"></ol>
+  <h3 class="sub">Parc machines</h3><div class="g3 rv" id="mc"></div>
+  <h3 class="sub">Certifications</h3><div class="bd rv" id="ce"></div>
+</div></section>
+
+<!-- ===== PRESTATIONS ===== -->
+<section id="prestations"><div class="w">
+  <div class="sh rv"><h2>Un savoir-faire, six façons de l’exercer</h2><p>Du prototype à la série, chaque prestation est pilotée par un seul interlocuteur.</p><div class="dim"></div></div>
+  <div class="g3 rv" id="sv"></div>
+  <h3 class="sub">Matières usinées</h3><div class="pl rv" id="mt"></div>
+  <h3 class="sub">Notre méthode</h3><ol class="pr rv" id="pr"></ol>
+</div></section>
+
+<!-- ===== RÉALISATIONS ===== -->
+<section id="realisations"><div class="w">
+  <div class="sh rv"><h2>Des pièces qui volent, soignent et tournent</h2><p>Six projets récents. Cliquez sur une fiche pour le détail.</p><div class="dim"></div></div>
+  <div class="rv"><div class="fl" id="fl" role="group" aria-label="Filtrer par secteur"></div><div class="g3" id="pg"></div></div>
+  <h3 class="sub">Ils nous font confiance</h3><div class="g3 rv" id="ts"></div>
+</div></section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact"><div class="w">
+  <div class="sh rv"><h2>Parlons de votre pièce</h2><div class="dim"></div></div>
+  <div class="two rv">
+    <div>
+      <address>
+        <span><b>Atelier</b>ZI des Forges, 91000 Évry-Courcouronnes</span>
+        <span><b>Téléphone</b>01 60 00 00 00</span>
+        <span><b>E-mail</b>contact@ferrand-precision.fr</span>
+        <span><b>Horaires</b>Lundi au vendredi, 7 h 30 à 18 h</span>
+      </address>
+      <svg class="map" viewBox="0 0 400 220" role="img" aria-label="Plan stylisé : l’atelier se situe au sud de Paris, en Essonne">
+        <rect width="400" height="220" fill="#12161B"/>
+        <g stroke="#2A313B" fill="none"><path d="M0 60H400M0 130H400M0 190H400M70 0V220M170 0V220M290 0V220M360 0V220"/></g>
+        <path d="M0 160C90 130 150 190 240 150S360 110 400 130" stroke="#3A4452" stroke-width="10" fill="none"/>
+        <path d="M0 20L140 90 230 105 400 40" stroke="#4A5666" stroke-width="2" fill="none"/>
+        <path d="M230 105V12" stroke="#FFD400" stroke-width="1" stroke-dasharray="4 3"/>
+        <circle cx="230" cy="105" r="7" fill="#FFD400"/><circle cx="230" cy="105" r="16" fill="none" stroke="#FFD400"/>
+        <text x="248" y="100" font-family="IBM Plex Mono,monospace" font-size="11" fill="#E8E6E1">Ferrand Précision</text>
+        <text x="12" y="208" font-family="IBM Plex Mono,monospace" font-size="10" fill="#8D97A6">Essonne (91), plan non contractuel</text>
+      </svg>
+    </div>
+    <form id="cf" novalidate>
+      <label>Nom<input name="nom" required autocomplete="name"><span class="er"></span></label>
+      <label>E-mail<input name="email" type="email" required autocomplete="email"><span class="er"></span></label>
+      <label>Message<textarea name="msg" rows="5" required></textarea><span class="er"></span></label>
+      <button class="btn" type="submit">Envoyer le message</button>
+      <p id="cm" role="status" aria-live="polite" style="color:var(--mu);font-size:.9rem"></p>
+    </form>
+  </div>
+</div></section>
+
+<!-- ===== DEVIS ===== -->
+<section id="devis"><div class="w">
+  <div class="sh rv"><h2>Demandez votre devis</h2><p>Réponse chiffrée sous 48 h ouvrées.</p><div class="dim"></div></div>
+  <div class="qw rv">
+    <div class="qb" aria-hidden="true"><i id="sf"></i></div>
+    <ol class="sl" id="sl"><li>Coordonnées</li><li>Projet</li><li>Pièces jointes</li></ol>
+    <form id="qf" novalidate>
+      <fieldset class="st"><legend class="sr" style="position:absolute;left:-9999px">Coordonnées</legend>
+        <label>Société<input name="soc" required autocomplete="organization"><span class="er"></span></label>
+        <label>Nom et prénom<input name="nom" required autocomplete="name"><span class="er"></span></label>
+        <label>E-mail professionnel<input name="email" type="email" required autocomplete="email"><span class="er"></span></label>
+        <label>Téléphone (facultatif)<input name="tel" type="tel" autocomplete="tel"><span class="er"></span></label>
+      </fieldset>
+      <fieldset class="st" hidden><legend class="sr" style="position:absolute;left:-9999px">Projet</legend>
+        <label>Prestation<select name="presta" required><option value="">Choisir…</option><option>Fraisage 5 axes</option><option>Tournage CNC</option><option>Rectification</option><option>Prototypage rapide</option><option>Série et répétitif</option><option>Contrôle et métrologie</option></select><span class="er"></span></label>
+        <label>Matière<select name="mat" required><option value="">Choisir…</option><option>Aluminium</option><option>Inox</option><option>Titane</option><option>Inconel</option><option>Laiton</option><option>Plastique technique</option><option>Autre</option></select><span class="er"></span></label>
+        <label>Quantité<input name="qte" type="number" min="1" required><span class="er"></span></label>
+        <label>Délai souhaité<select name="delai"><option>Standard (3 semaines)</option><option>Rapide (1 semaine)</option><option>Urgent (moins de 5 jours)</option></select><span class="er"></span></label>
+        <label>Description du besoin<textarea name="desc" rows="4" required></textarea><span class="er"></span></label>
+      </fieldset>
+      <fieldset class="st" hidden><legend class="sr" style="position:absolute;left:-9999px">Pièces jointes</legend>
+        <label class="dz">Glissez vos plans ici ou cliquez pour choisir<br><small>PDF, STEP, DXF, 20 Mo maximum par fichier</small><input id="fi" type="file" multiple accept=".pdf,.step,.stp,.dxf"></label>
+        <ul id="fls"></ul>
+        <label class="ck"><input type="checkbox" name="rgpd" required>J’accepte que Ferrand Précision traite ces données pour répondre à ma demande.<span class="er" style="flex-basis:100%"></span></label>
+      </fieldset>
+      <div class="nb"><button type="button" class="btn gh" id="bp" hidden>Précédent</button><button type="button" class="btn" id="bn" style="margin-left:auto">Suivant</button><button type="submit" class="btn" id="bs" hidden style="margin-left:auto">Envoyer la demande</button></div>
+    </form>
+    <div class="ok" id="ok" hidden role="status">
+      <svg viewBox="0 0 52 52" width="64" height="64" fill="none" stroke="#FFD400" stroke-width="2" aria-hidden="true"><circle class="dw" pathLength="1" cx="26" cy="26" r="24"/><path class="dw" pathLength="1" d="M14 27l8 8 16-17"/></svg>
+      <h3>Demande envoyée</h3><p>Merci. Version de démonstration : aucune donnée n’a été transmise.</p>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="w fb">
+  <a class="logo" href="#accueil"><span>Ferrand Précision</span></a>
+  <nav aria-label="Pied de page"><a href="#entreprise">Entreprise</a><a href="#prestations">Prestations</a><a href="#realisations">Réalisations</a><a href="#contact">Contact</a><a href="#devis">Devis</a></nav>
+  <p>Site de démonstration. Ferrand Précision est une entreprise fictive : adresse, chiffres, clients et certifications sont inventés. Mentions légales fictives : Ferrand Précision SAS, RCS Évry 000 000 000.</p>
+</div></footer>
+
+<dialog id="md" aria-labelledby="mt2"></dialog>
+
+<script>
+/* ===== Utilitaires ===== */
+const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)];
+document.documentElement.classList.add('js');
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,FP=matchMedia('(hover:hover) and (pointer:fine)').matches;
+const H=(id,a,f)=>$(id).innerHTML=a.map(f).join('');
+
+/* ===== Contenu (données) ===== */
+const VAL=[["Précision","Chaque cote est mesurée, consignée et tracée. Notre salle de métrologie est maintenue à 20 °C."],["Réactivité","Devis chiffré sous 48 h, prototypes en 5 jours ouvrés, une équipe qui décroche le téléphone."],["Traçabilité","Certificat matière, rapport dimensionnel et dossier de lot livrés avec chaque commande."]];
+const TL=[["1999","Création de l’atelier à quatre, avec deux tours conventionnels."],["2006","Arrivée du premier centre d’usinage 5 axes."],["2012","Certification ISO 9001."],["2018","Certification EN 9100 et salle de métrologie 3D."],["2024","18 machines CNC et 40 salariés."]];
+const MC=[["Centre 5 axes UC-500","600×500×450 mm","5 axes simultanés","±0,005 mm"],["Centre 3 axes VF-3","1 020×510×640 mm","Broche 12 000 tr/min","±0,01 mm"],["Tour CN contre-broche T-42","Ø 42 mm max","Outils motorisés","±0,005 mm"],["Rectifieuse cylindrique RC-300","300 mm entre pointes","Ø 200 mm max","±0,002 mm"],["Machine à mesurer 3D","700×700×600 mm","Palpage scanning","±0,002 mm"]];
+const CE=[["ISO 9001","Management de la qualité"],["EN 9100","Aéronautique et défense"],["ISO 13485","Dispositifs médicaux"]];
+const SV=[["Fraisage 5 axes","Pièces complexes usinées en une seule prise.",["Jusqu’à 600 mm","Ra 0,4 µm","±0,005 mm"],"M12 3v7M8 10h8v4H8zM12 14v7M5 21h14"],["Tournage CNC","Arbres, bagues et pièces de révolution, du prototype à la série.",["Ø 2 à 42 mm","Contre-broche","±0,005 mm"],"M3 8h18M3 16h18M7 8v8M17 8v8M12 4v16"],["Rectification","Finition dimensionnelle et état de surface proche du miroir.",["Ra 0,1 µm","Ø 200 mm max","±0,002 mm"],"M12 4a8 8 0 100 16 8 8 0 100-16M12 9a3 3 0 100 6 3 3 0 100-6"],["Prototypage rapide","De la maquette fonctionnelle à la présérie en quelques jours.",["Délai 5 jours","1 à 20 pièces","Plan ou STEP"],"M4 20L12 4l8 16zM8 14h8"],["Série et répétitif","Productions de 100 à 10 000 pièces avec suivi statistique.",["100 à 10 000","Suivi SPC","Cpk ≥ 1,67"],"M4 6h4v4H4zM10 6h4v4h-4zM16 6h4v4h-4zM4 14h4v4H4zM10 14h4v4h-4z"],["Contrôle et métrologie","Rapports dimensionnels, premier article (FAI) et certificats matière.",["MMT 3D","Rapport FAI","Étalonnage raccordé"],"M4 4h16v16H4zM4 12h16M12 4v16"]];
+const MT=["Aluminium 7075","Inox 316L","Titane TA6V","Inconel 718","Laiton","Acier outil","PEEK","Delrin"];
+const PR=[["Étude","Analyse du plan et retour de faisabilité."],["Programmation","Trajectoires FAO validées en simulation."],["Usinage","Production sur la machine adaptée."],["Contrôle","Mesure 3D et rapport dimensionnel."],["Livraison","Emballage protégé et dossier de lot."]];
+const SEC=["Tous","Aéronautique","Médical","Automobile","Énergie"];
+const PJ=[["Bride de turbopompe","Aéronautique","Inconel 718","±0,008 mm","12 jours","Un motoriste cherchait un second fournisseur pour une bride de pompe à carburant.","Usiner l’Inconel 718 en tenant une planéité de 0,01 mm.","Ébauche trochoïdale, outils céramique et reprise de contraintes avant finition.","0 rebut sur 240 pièces, premier article validé du premier coup."],
+["Corps d’instrument chirurgical","Médical","Titane TA6V","±0,005 mm","8 jours","Un fabricant d’instruments voulait industrialiser un corps de pince réutilisable.","Respecter un état de surface Ra 0,4 µm sans reprise manuelle.","Fraisage 5 axes en une prise, finition par rectification et passivation.","Cadence portée de 20 à 60 pièces par jour."],
+["Carter de boîte de transfert","Automobile","Aluminium 6082","±0,02 mm","15 jours","Un équipementier lançait une série de 1 200 carters pour un véhicule hybride.","Tenir la coaxialité de deux alésages distants de 280 mm.","Montage dédié, usinage en deux postes et contrôle en ligne par palpage.","Cpk de 1,8 mesuré sur toute la série."],
+["Arbre de turbine hydraulique","Énergie","Inox 17-4PH","±0,01 mm","20 jours","Un exploitant de centrale hydraulique devait remplacer un arbre en urgence.","Rétroconcevoir l’arbre depuis la pièce usée, sans plan.","Relevé par MMT, modélisation 3D puis tournage et rectification.","Arbre livré en 20 jours au lieu de 12 semaines."],
+["Support de capteur embarqué","Aéronautique","Aluminium 7075","±0,01 mm","5 jours","Une start-up d’avionique avait besoin de 15 prototypes avant un vol d’essai.","Alléger le support de 30 % sans perdre en rigidité.","Poches allégées en fraisage 5 axes, itérations validées par la start-up.","Prototypes livrés en 5 jours, série lancée ensuite."],
+["Embase d’implant","Médical","Inox 316L","±0,005 mm","10 jours","Un industriel de l’orthopédie sous-traitait une embase d’implant de hanche.","Garantir une traçabilité complète pièce par pièce.","Gravure laser du numéro de lot et dossier ISO 13485 par pièce.","Audit client passé sans écart."]];
+const PS=['<circle cx=60 cy=45 r=34 /><circle cx=60 cy=45 r=13 /><circle cx=60 cy=18 r=3 /><circle cx=87 cy=45 r=3 /><circle cx=60 cy=72 r=3 /><circle cx=33 cy=45 r=3 />','<rect x=10 y=35 width=100 height=20 /><path d="M30 35v20M50 35v20M90 35v20"/><rect x=100 y=30 width=10 height=30 />','<path d="M20 72L40 18h40l20 54z"/><circle cx=60 cy=45 r=10 />','<polygon points="60,8 98,28 98,62 60,82 22,62 22,28"/><circle cx=60 cy=45 r=12 />','<rect x=20 y=20 width=80 height=50 rx=4 /><circle cx=40 cy=45 r=8 /><circle cx=80 cy=45 r=8 />','<path d="M25 70V30l35-15 35 15v40z"/><path d="M60 15v55"/>'];
+const TS=[["Ferrand Précision tient ses délais et ses tolérances, ce qui est rare sur de l’Inconel.","Claire Maillard, responsable achats","Aeroval"],["Le rapport de contrôle arrive avec la pièce. Nos audits qualité n’ont plus rien à redire.","Julien Roques, directeur qualité","Medixa"],["Un prototype en cinq jours, puis la série sans changer de fournisseur.","Samir Haddad, ingénieur méthodes","Volta Énergie"]];
+
+/* ===== Rendu ===== */
+$('#mq').innerHTML='<div>'+['Aéronautique','Médical','Automobile','Énergie'].map(x=>`<b>${x}</b>`).join('').repeat(8)+'</div>';
+H('#val',VAL,v=>`<div><h3>${v[0]}</h3><p>${v[1]}</p></div>`);
+H('#tl',TL,t=>`<li><b>${t[0]}</b>${t[1]}</li>`);
+H('#mc',MC,m=>`<article class="card"><h3>${m[0]}</h3><dl class="mf"><div><dt>Course</dt><dd>${m[1]}</dd></div><div><dt>Capacité</dt><dd>${m[2]}</dd></div><div><dt>Tolérance</dt><dd>${m[3]}</dd></div></dl></article>`);
+H('#ce',CE,c=>`<div><svg width=28 height=28 viewBox="0 0 28 28" fill=none stroke="#FFD400" stroke-width=1.5 aria-hidden=true><polygon points="14,2 25,8 25,20 14,26 3,20 3,8"/><path d="M9 14l4 4 6-8"/></svg><p><b>${c[0]}</b><span>${c[1]}</span></p></div>`);
+H('#sv',SV,s=>`<article class="card"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="${s[3]}"/></svg><h3>${s[0]}</h3><p>${s[1]}</p><ul class="sp">${s[2].map(x=>`<li>${x}</li>`).join('')}</ul></article>`);
+H('#mt',MT,m=>`<span>${m}</span>`);
+H('#pr',PR,p=>`<li><b>${p[0]}</b>${p[1]}</li>`);
+H('#fl',SEC,(s,i)=>`<button type="button" aria-pressed="${i==0}">${s}</button>`);
+H('#pg',PJ,(p,i)=>`<button type="button" class="card pj" data-s="${p[1]}" data-i="${i}"><div class="pv"><svg viewBox="0 0 120 100" aria-hidden="true">${PS[i]}<path d="M10 88h100M10 84v8M110 84v8" stroke="#E9EEF2"/></svg></div><p class="mt">${p[1]}</p><h3>${p[0]}</h3><ul class="sp"><li>Matière : ${p[2]}</li><li>Tolérance : ${p[3]}</li><li>Délai : ${p[4]}</li></ul></button>`);
+H('#ts',TS,t=>`<blockquote><p>${t[0]}</p><cite>${t[1]}, ${t[2]}</cite></blockquote>`);
+
+/* ===== Navigation : menu, progression, scroll-spy ===== */
+const bg=$('#bg'),nv=$('#nv');
+bg.onclick=()=>{const o=nv.classList.toggle('open');bg.setAttribute('aria-expanded',o)};
+nv.onclick=e=>{if(e.target.closest('a')){nv.classList.remove('open');bg.setAttribute('aria-expanded',false)}};
+addEventListener('scroll',()=>{$('#prog').style.transform=`scaleX(${scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)})`},{passive:true});
+const lk=$$('#nv a:not(.btn)');
+const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)lk.forEach(a=>a.getAttribute('href')=='#'+e.target.id?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current'))}),{rootMargin:'-45% 0px -50% 0px'});
+$$('main section').forEach(s=>spy.observe(s));
+
+/* ===== Apparitions et compteurs ===== */
+$$('.rv').forEach(r=>[...r.children].forEach((c,i)=>c.style.setProperty('--i',i)));
+const rv=new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}}),{threshold:.1});
+$$('.rv').forEach(r=>rv.observe(r));
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();$$('[data-n]').forEach(el=>{const n=+el.dataset.n,t0=performance.now(),f=t=>{const p=RM?1:Math.min((t-t0)/1400,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)})}}).observe($('#st'));
+
+/* ===== Tilt 3D des cartes (souris uniquement) ===== */
+let T=null;
+if(FP&&!RM)document.addEventListener('pointermove',e=>{
+  const c=e.target.closest&&e.target.closest('.card');
+  if(T&&T!==c)T.style.transform='';T=c;
+  if(c){const b=c.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;c.style.transform=`perspective(700px) rotateX(${-y*6}deg) rotateY(${x*6}deg)`}
+});
+
+/* ===== Réalisations : filtres et fiche détaillée ===== */
+$('#fl').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  $$('#fl button').forEach(x=>x.setAttribute('aria-pressed',x==b));
+  $$('.pj').forEach(c=>{const ok=b.textContent=='Tous'||c.dataset.s==b.textContent;c.hidden=!ok;if(ok){c.classList.remove('show');void c.offsetWidth;c.classList.add('show')}})};
+const md=$('#md');
+$('#pg').onclick=e=>{const c=e.target.closest('.pj');if(!c)return;const p=PJ[c.dataset.i];
+  md.innerHTML=`<button class="x" aria-label="Fermer">×</button><h3 id="mt2">${p[0]}</h3><p class="mt">${p[1]}, ${p[2]}, ${p[3]}, ${p[4]}</p><dl><dt>Contexte</dt><dd>${p[5]}</dd><dt>Défi</dt><dd>${p[6]}</dd><dt>Solution</dt><dd>${p[7]}</dd><dt>Résultat</dt><dd>${p[8]}</dd></dl>`;
+  md.showModal()};
+md.onclick=e=>{if(e.target==md||e.target.closest('.x'))md.close()};   /* Échap : géré nativement par <dialog> */
+
+/* ===== Validation des formulaires ===== */
+const msg=el=>{const v=el.value.trim();
+  if(el.type=='checkbox')return el.checked?'':'Cochez cette case pour envoyer votre demande.';
+  if(el.required&&!v)return'Ce champ est obligatoire.';
+  if(el.type=='email'&&v&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))return'Saisissez une adresse valide, par exemple nom@societe.fr.';
+  if(el.type=='tel'&&v&&!/^[\d\s+().-]{9,}$/.test(v))return'Saisissez un numéro valide, par exemple 01 60 00 00 00.';
+  if(el.name=='desc'&&v&&v.length<10)return'Décrivez votre besoin en 10 caractères minimum.';
+  if(el.type=='number'&&v&&+v<1)return'La quantité doit être d’au moins 1.';return''};
+const chk=el=>{const m=msg(el);el.setAttribute('aria-invalid',!!m);el.closest('label').querySelector('.er').textContent=m;return!m};
+['input','change'].forEach(t=>document.addEventListener(t,e=>{if(e.target.form&&e.target.name&&e.target.type!='file')chk(e.target)}));
+const vf=root=>$$('[name]',root).map(chk).every(Boolean);
+
+/* Contact : simulation d’envoi */
+$('#cf').onsubmit=e=>{e.preventDefault();if(vf(e.target)){e.target.reset();$('#cm').textContent='Message reçu. Version de démonstration : rien n’a été envoyé.'}};
+
+/* Devis : 3 étapes */
+const qf=$('#qf'),sts=$$('.st',qf),sl=$$('#sl li');let c=0;
+const show=n=>{c=n;sts.forEach((s,i)=>s.hidden=i!=n);sl.forEach((l,i)=>l.className=i<n?'dn':i==n?'on':'');$('#sf').style.transform=`scaleX(${(n+1)/3})`;$('#bp').hidden=!n;$('#bn').hidden=n==2;$('#bs').hidden=n!=2};
+show(0);
+$('#bn').onclick=()=>{if(vf(sts[c]))show(c+1)};
+$('#bp').onclick=()=>show(c-1);
+qf.onsubmit=e=>{e.preventDefault();if(!vf(sts[2]))return;
+  /* Pour un envoi réel : remplacer par fetch('https://formspree.io/f/VOTRE_ID',{method:'POST',body:new FormData(qf)}) ou activer Netlify Forms. */
+  qf.hidden=true;$('.qb').hidden=true;$('#sl').hidden=true;$('#ok').hidden=false};
+
+/* Zone de dépôt (interface uniquement : les fichiers ne sont pas transmis) */
+const dz=$('.dz'),fi=$('#fi'),fls=$('#fls');
+const addF=l=>[...l].forEach(f=>{const ok=/\.(pdf|step|stp|dxf)$/i.test(f.name)&&f.size<2e7,li=document.createElement('li');li.textContent=ok?f.name:`${f.name} : refusé (PDF, STEP ou DXF, 20 Mo max)`;if(!ok)li.className='bad';fls.append(li)});
+fi.onchange=()=>{fls.innerHTML='';addF(fi.files)};
+['dragover','dragenter','dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.toggle('ov',t=='dragover'||t=='dragenter');if(t=='drop')addF(e.dataTransfer.files)}));
+
+/* ===== DA 2 : fond animé de l’accueil (outil de coupe et étincelles) ===== */
+(()=>{
+const cv=$('#cv'),g=cv.getContext('2d'),ro=$('#ro'),hero=$('#accueil'),D=Math.min(devicePixelRatio||1,2);
+let W,H,tr=[],sp=[],a=0,vis=true,n=0,mx=0,my=0;
+const rs=()=>{W=cv.width=cv.clientWidth*D;H=cv.height=cv.clientHeight*D};rs();
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+const pos=a=>{const k=.55+.45*Math.sin(a*.045),R=Math.min(W,H)*.34*k,cx=W*(innerWidth>900?.72:.5)+mx*40*D,cy=H*.44+my*30*D;return[cx+R*(Math.cos(a)+.28*Math.cos(7*a)),cy+R*(Math.sin(a)+.28*Math.sin(7*a))]};
+const step=()=>{a+=.05;const p=pos(a);tr.push(p);if(tr.length>1100)tr.shift();for(let i=0;i<2;i++)sp.push({x:p[0],y:p[1],vx:(Math.random()-.5)*5*D,vy:-(Math.random()*4+1)*D,l:1})};
+const draw=()=>{g.clearRect(0,0,W,H);g.globalCompositeOperation='source-over';g.lineWidth=1.3*D;
+  for(let c=0;c<11;c++){g.beginPath();for(let i=c*100,e=Math.min(tr.length-1,c*100+100);i<=e;i++)i==c*100?g.moveTo(...tr[i]):g.lineTo(...tr[i]);g.strokeStyle=`rgba(233,238,242,${(c+1)/16})`;g.stroke()}
+  const h=tr[tr.length-1];if(!h)return;
+  g.fillStyle='#fff';g.beginPath();g.arc(h[0],h[1],4*D,0,7);g.fill();g.shadowBlur=0;
+  sp=sp.filter(s=>s.l>0);sp.forEach(s=>{s.x+=s.vx;s.y+=s.vy;s.vy+=.18*D;s.l-=.03;g.strokeStyle=`rgba(255,212,0,${s.l})`;g.beginPath();g.moveTo(s.x,s.y);g.lineTo(s.x-s.vx*2,s.y-s.vy*2);g.stroke()});
+  if(++n%6==0){const f=v=>((v/W-.5)*320).toFixed(3);ro.textContent=`X ${f(h[0])}\nY ${f(h[1])}\nZ ${(-2.5+Math.sin(a)*.4).toFixed(3)}\nBROCHE ${12000+(Math.random()*40-20|0)} tr/min`}};
+const still=()=>{tr=[];for(let i=0;i<1100;i++)step();draw()};
+addEventListener('resize',()=>{rs();if(RM)still()});
+new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(hero);
+if(RM)still();else{const L=()=>{if(vis){step();draw()}requestAnimationFrame(L)};L()}
+const v=$('#hv');if(RM)v.remove();else v.addEventListener('canplay',()=>v.classList.add('on'));
+})();
+
+/* Halo qui suit la souris sur les cartes, parallaxe du fond au scroll */
+if(FP&&!RM)document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.card');if(c){const b=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-b.left+'px');c.style.setProperty('--my',e.clientY-b.top+'px')}});
+addEventListener('scroll',()=>document.documentElement.style.setProperty('--sy',scrollY),{passive:true});
+</script>
+</body>
+</html>
